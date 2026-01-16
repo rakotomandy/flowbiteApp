@@ -1,3 +1,5 @@
+@props(['users'])
+
 <aside class="h-screen w-[20%] bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 text-slate-200 flex flex-col">
     @if ($errors->any())
     <div class="text-red-600">
@@ -21,14 +23,14 @@
     <!-- Search -->
     <div class="px-6 py-4">
         <form class="max-w-md mx-auto">
-            <label for="search" class="block mb-2.5 text-sm font-medium text-heading sr-only ">Search</label>
+            <label for="search" class="block mb-2.5 text-sm font-medium text-gray-700 sr-only ">Search</label>
             <div class="relative">
                 <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                    <svg class="w-4 h-4 text-body" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <svg class="w-4 h-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                         <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z" /></svg>
                 </div>
-                <input type="search" id="search" class="block w-full p-3 ps-9  text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body bg-transparent focus:bg-sky-100" placeholder="Search" required />
-                <button type="submit" class="absolute end-1.5 bottom-1.5 text-white bg-brand hover:bg-brand-strong box-border border border-transparent focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded text-xs px-3 py-1.5 focus:outline-none">Search</button>
+                <input type="search" id="search" class="block w-full p-3 ps-9 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 shadow-sm placeholder:text-gray-500 bg-transparent focus:bg-sky-50" placeholder="Search" required />
+                <button type="submit" class="absolute end-1.5 bottom-1.5 text-white bg-blue-600 hover:bg-blue-700 box-border border border-transparent focus:ring-4 focus:ring-blue-300 shadow-sm font-medium leading-5 rounded text-xs px-3 py-1.5 focus:outline-none">Search</button>
             </div>
         </form>
     </div>
@@ -36,48 +38,21 @@
     <!-- Users list (TRANSPARENT) -->
     <div class="flex-1 overflow-y-auto px-4 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
         <ul class="divide-y divide-white/10">
-
+            <!-- #region -->
+            @foreach ($users as $user)
             <!-- User item -->
             <li class="py-3 hover:bg-white/5 rounded-xl px-3 transition">
-                <div class="flex items-center gap-3">
-                    <img class="w-9 h-9 rounded-full" src="/docs/images/people/profile-picture-1.jpg" alt="">
-                    <div class="min-w-0">
-                        <p class="text-sm font-medium text-white truncate">Neil Sims</p>
-                        <p class="text-xs text-slate-400 truncate">email@windster.com</p>
+                <a href="{{ route('chat', ['user_id' => $user->id]) }}" class="block">
+                    <div class="flex items-center gap-3">
+                        <img class="w-9 h-9 rounded-full" src="/docs/images/people/profile-picture-1.jpg" alt="">
+                        <div class="min-w-0">
+                            <p class="text-sm font-medium text-white truncate">{{ $user->name }}</p>
+                            <p class="text-xs text-slate-400 truncate">{{ $user->email }}</p>
+                        </div>
                     </div>
-                </div>
+                </a>
             </li>
-
-            <li class="py-3 hover:bg-white/5 rounded-xl px-3 transition">
-                <div class="flex items-center gap-3">
-                    <img class="w-9 h-9 rounded-full" src="/docs/images/people/profile-picture-3.jpg" alt="">
-                    <div class="min-w-0">
-                        <p class="text-sm font-medium text-white truncate">Bonnie Green</p>
-                        <p class="text-xs text-slate-400 truncate">email@windster.com</p>
-                    </div>
-                </div>
-            </li>
-
-            <li class="py-3 hover:bg-white/5 rounded-xl px-3 transition">
-                <div class="flex items-center gap-3">
-                    <img class="w-9 h-9 rounded-full" src="/docs/images/people/profile-picture-2.jpg" alt="">
-                    <div class="min-w-0">
-                        <p class="text-sm font-medium text-white truncate">Michael Gough</p>
-                        <p class="text-xs text-slate-400 truncate">email@windster.com</p>
-                    </div>
-                </div>
-            </li>
-
-            <li class="py-3 hover:bg-white/5 rounded-xl px-3 transition">
-                <div class="flex items-center gap-3">
-                    <img class="w-9 h-9 rounded-full" src="/docs/images/people/profile-picture-4.jpg" alt="">
-                    <div class="min-w-0">
-                        <p class="text-sm font-medium text-white truncate">Lana Byrd</p>
-                        <p class="text-xs text-slate-400 truncate">email@windster.com</p>
-                    </div>
-                </div>
-            </li>
-
+            @endforeach
         </ul>
     </div>
 
