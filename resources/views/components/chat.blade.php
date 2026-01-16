@@ -35,6 +35,7 @@
         </div>
         
         {{-- Messages Container - Scrollable area for conversation history --}}
+        <div class="h-100 overflow-scroll">
         <div class="flex-1 overflow-y-auto p-6 space-y-4">
             {{-- 
                 Loop through all messages in conversation
@@ -82,7 +83,7 @@
                 </div>
             @endforelse
         </div>
-
+        </div>
         {{-- Message Input Form - For sending new messages --}}
         <form action="{{ route('sendMessage') }}" method="POST">
             @csrf {{-- CSRF token for security --}}
