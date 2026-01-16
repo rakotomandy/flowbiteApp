@@ -31,12 +31,13 @@ class MessageController extends Controller
      */
     public function sendMessage(Request $request)
     {
+        $currentUserId = Auth::guard('login')->id();
         // Step 1: Validate the incoming request data
         // - sender_id: must exist in logins table
         // - receiver_id: must exist in logins table  
         // - message: required string content
         $validated = $request->validate([
-            'sender_id' => 'required|exists:logins,id',
+            'sender_id' => $currentUserId,
             'receiver_id' => 'required|exists:logins,id',
             'message' => 'required|string',
         ]);
@@ -50,7 +51,6 @@ class MessageController extends Controller
 
         // Step 3: Get conversation between current user and selected user
         // This retrieves ALL messages between these two users
-        $currentUserId = $validated['sender_id'];
         $selectedUserId = $validated['receiver_id'];
         
         // Complex query to get conversation between two specific users
@@ -70,8 +70,9 @@ class MessageController extends Controller
                         ->get();
                         
         // Step 4: Get all users except current user for sidebar
-        $users = Login::all()->except(Auth::guard('login')->id());
-        
+        // $users = Login::all()->except(Auth::guard('login')->id());
+        $users = Login::where('id', '!=', $currentUserId)->get();
+
         // Step 5: Return chat view with all necessary data
         return view('chat', [
             'messages' => $messages,           // Conversation messages
@@ -122,5 +123,7 @@ class MessageController extends Controller
             'users' => $users,           // All other users  
             'user_id' => $userId         // Selected user ID
         ]);
+
+            
     }
 }
